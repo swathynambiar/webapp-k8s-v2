@@ -18,22 +18,17 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-    
         aws-region: ${{ secrets.AWS_REGION }}
-
-    - name: Verify AWS Authentication
-      run: aws sts get-caller-identity  # Check if credentials work
 
     - name: Login to Amazon ECR
       run: |
         aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 191779805693.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-    - name: Build and Tag Docker Image
+    - name: Build and Tag MySQL Docker Image
       run: |
         docker build -t 191779805693.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mysql:latest -f Dockerfile_mysql .
 
-    - name: Push Docker Image to Amazon ECR
+    - name: Push MySQL Image to Amazon ECR
       run: |
         docker push 191779805693.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mysql:latest
 
