@@ -23,10 +23,9 @@ jobs:
     - name: Login to Amazon ECR
       run: |
         aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 191779805693.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-
     - name: Build and Tag MySQL Docker Image
       run: |
-        docker build -t 191779805693.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mysql:latest -f Dockerfile_mysql .
+        docker build -t 191779805693.dkr.ecr.us-east-1.amazonaws.com/mysql:latest -f Dockerfile_mysql .
 
     - name: Push MySQL Image to Amazon ECR
       run: |
